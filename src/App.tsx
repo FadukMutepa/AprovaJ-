@@ -202,20 +202,10 @@ export default function App() {
       
       {/* HEADER / NAVIGATION */}
       <header className="sticky top-0 z-40 w-full bg-[#0B2545]/95 backdrop-blur-md border-b border-slate-800 text-white shadow-md transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 grid grid-cols-3 items-center">
           
-          {/* Logo */}
-          <a href="#home" className="flex items-center space-x-2.5 group">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-300">
-              <Award className="w-6 h-6 text-white" />
-            </div>
-            <span className="font-extrabold text-xl sm:text-2xl tracking-tight bg-gradient-to-r from-white via-slate-100 to-emerald-400 bg-clip-text text-transparent">
-              AprovaJá
-            </span>
-          </a>
-
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-8">
+          {/* Left Side: Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center space-x-8 col-span-1">
             <a 
               href="#funcionalidades" 
               className={`text-sm font-medium transition-colors ${activeSection === "funcionalidades" ? "text-emerald-400" : "text-slate-300 hover:text-white"}`}
@@ -236,11 +226,39 @@ export default function App() {
             </a>
           </nav>
 
-          {/* Desktop CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Left Side Mobile Menu Button */}
+          <div className="md:hidden flex items-center col-span-1">
+            <button 
+              id="mobile-menu-btn"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors focus:outline-none"
+              aria-label="Toggle Menu"
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
+          {/* CENTER: Logo Button with Refresh function */}
+          <div className="col-span-1 flex justify-center">
+            <button 
+              onClick={() => window.location.reload()}
+              className="flex items-center space-x-2.5 group cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/50 rounded-xl px-3 py-1.5 hover:bg-slate-800/40 transition-all duration-300"
+              title="Clique para atualizar toda a página"
+            >
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 group-hover:bg-emerald-400 transition-all duration-300">
+                <Award className="w-5.5 h-5.5 sm:w-6 sm:h-6 text-white" />
+              </div>
+              <span className="font-extrabold text-lg sm:text-2xl tracking-tight bg-gradient-to-r from-white via-slate-100 to-emerald-400 bg-clip-text text-transparent select-none">
+                AprovaJá
+              </span>
+            </button>
+          </div>
+
+          {/* Right Side: CTA Button or Profile status */}
+          <div className="col-span-1 flex justify-end items-center space-x-4">
             {registeredUser ? (
               <div className="flex items-center space-x-3">
-                <span className="text-xs text-emerald-400 bg-emerald-950/50 border border-emerald-900/50 px-3 py-1.5 rounded-full font-medium flex items-center space-x-1">
+                <span className="hidden sm:inline-flex text-xs text-emerald-400 bg-emerald-950/50 border border-emerald-900/50 px-3 py-1.5 rounded-full font-medium items-center space-x-1">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                   <span>Estudante: {registeredUser.nome}</span>
                 </span>
@@ -254,23 +272,13 @@ export default function App() {
             ) : (
               <a 
                 href="#contacto" 
-                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold px-5 py-2.5 rounded-xl text-sm transition-all shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/20 hover:-translate-y-0.5 active:translate-y-0 flex items-center space-x-1"
+                className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm transition-all shadow-md shadow-emerald-500/10 hover:shadow-emerald-500/20 hover:-translate-y-0.5 active:translate-y-0 flex items-center space-x-1"
               >
                 <span>Começar Grátis</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </a>
             )}
           </div>
-
-          {/* Mobile Hamburguer button */}
-          <button 
-            id="mobile-menu-btn"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors focus:outline-none"
-            aria-label="Toggle Menu"
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
 
         {/* Mobile menu container */}
@@ -352,6 +360,30 @@ export default function App() {
           </div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            
+            {/* PROMINENT CENTERED BRAND SECTION: reloads the page on click */}
+            <div className="flex flex-col items-center justify-center text-center mb-12">
+              <button 
+                onClick={() => window.location.reload()}
+                className="group flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4 p-4 px-6 rounded-3xl bg-slate-900/50 border border-slate-800 hover:border-emerald-500/40 hover:bg-slate-900/90 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 cursor-pointer shadow-2xl max-w-md"
+                title="Clique para actualizar a página principal"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-emerald-500 flex items-center justify-center shadow-lg shadow-emerald-500/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+                  <Award className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-center sm:text-left">
+                  <h2 className="font-extrabold text-2xl tracking-tight text-white flex items-center justify-center sm:justify-start space-x-1.5">
+                    <span>Aprova</span>
+                    <span className="text-emerald-400">Já</span>
+                  </h2>
+                  <p className="text-[10px] text-slate-400 uppercase tracking-widest mt-1 font-mono group-hover:text-emerald-400 transition-colors flex items-center justify-center sm:justify-start space-x-1">
+                    <span className="inline-block animate-spin mr-1">🔄</span>
+                    <span>Clique para Actualizar a Página</span>
+                  </p>
+                </div>
+              </button>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
               
               {/* Hero Left: Headlines & CTA */}
